@@ -19,4 +19,13 @@ router.get("/", (req,res) => {
     })
   });
 
+  router.delete("/:id", (req,res) => {
+    const id = req.params.id;
+    const query ='delete from filmes where id = ?';
+    dbConecta.query(query,[id], (err, results) => {
+        if(err) throw(err);
+        res.json(results);
+    });
+  });  
+
   module.exports = router
