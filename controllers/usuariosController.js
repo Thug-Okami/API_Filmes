@@ -49,10 +49,19 @@ router.get("/", (req,res) => {
     });
   });
 
-  router.delete("/:id", (req,res) => {
+  router.delete("/usuarioid/:id", (req,res) => {
     const id = req.params.id;
     const query ='delete from usuarios where id = ?';
     dbConecta.query(query,[id], (err, results) => {
+        if(err) throw(err);
+        res.json(results);
+    });
+  });  
+
+  router.delete("/:username", (req,res) => {
+    const username = req.params.username;
+    const query ='delete from usuarios where username = ?';
+    dbConecta.query(query,[username], (err, results) => {
         if(err) throw(err);
         res.json(results);
     });

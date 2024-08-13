@@ -32,4 +32,17 @@ router.get("/", (req,res) => {
     });
   });  
 
+  router.put('/', (req, res) => {
+    const {comentario, usuario_id, filme_id} = req.body;
+    const query = 'update comentarios set comentario = ?, criado_em = CURRENT_TIMESTAMP() where usuario_id = ? and filme_id = ? ';
+
+    dbConecta.query(query, [comentario, usuario_id, filme_id], (err) => {
+      if (err) throw err;
+      res.json({
+        mensagem: 'Comentario atualizado com sucesso',
+        body: req.body
+      });
+    });
+  });
+
   module.exports = router

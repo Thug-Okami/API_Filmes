@@ -35,4 +35,20 @@ router.get("/", (req,res) => {
     });
   });  
 
+  router.put('/', (req, res) => {
+    const {nota, usuario_id, filme_id} = req.body;
+    if(nota < 1 || 5 < nota) {
+      console.error('Nota precisa ser entre 1 e 5');
+    };
+      
+    const query = 'update avaliacoes set nota = ?, criado_em = CURRENT_TIMESTAMP() where usuario_id = ? and filme_id = ? ';
+    dbConecta.query(query, [nota, usuario_id, filme_id], (err) => {
+      if (err) throw err;
+      res.json({
+        mensagem: 'Avaliação atualizada com sucesso',
+        body: req.body
+      });
+    });
+  });
+
   module.exports = router
